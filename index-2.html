@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🐱 Kattejacht - 100 Games</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#111827,#312e81);color:#fff}header{padding:22px;text-align:center;background:#111827;position:sticky;top:0;z-index:5;box-shadow:0 3px 15px #0008}h1{margin:0 0 8px}.sub{color:#cbd5e1}.grid{max-width:1050px;margin:auto;padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.game{background:#374151;color:#fff;border:0;border-radius:15px;padding:16px;min-height:90px;font-size:16px;font-weight:bold;cursor:pointer;transition:.15s}.game:hover{transform:translateY(-3px);background:#4f46e5}.game span{display:block;font-size:28px;margin-bottom:7px}.hidden{display:none}.screen{max-width:900px;margin:20px auto;padding:18px}.back{background:#374151;color:white;border:0;border-radius:10px;padding:11px 16px;cursor:pointer}.box{margin-top:15px;min-height:430px;background:#1f2937;border-radius:20px;padding:25px;text-align:center;position:relative;overflow:hidden}.btn{background:#4f46e5;color:white;border:0;border-radius:12px;padding:13px 20px;font-size:18px;cursor:pointer;margin:6px}.btn:hover{background:#6366f1}.big{font-size:70px}.target{position:absolute;border:0;background:transparent;font-size:50px;cursor:pointer}.score{font-size:22px;color:#fde68a}input{font-size:22px;padding:10px;border-radius:10px;border:0;width:180px;text-align:center}.color{width:100px;height:100px;border:0;border-radius:18px;margin:10px;cursor:pointer}.memory{width:75px;height:75px;border:0;border-radius:12px;margin:5px;font-size:28px;background:#4b5563;color:#fff}.bar{height:25px;background:#374151;border-radius:20px;overflow:hidden;margin:20px}.bar i{display:block;height:100%;background:#22c55e;width:0}.arena{height:330px;position:relative;background:#0f172a;border-radius:15px}.small{font-size:14px;color:#cbd5e1}@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);padding:10px}.game{font-size:14px;padding:10px}}
+</style>
+</head>
+<body>
+<header><h1>🐱 Kattejacht: 100 Games</h1><div class="sub">Kies een spel en speel meteen!</div></header>
+<main id="menu" class="grid"></main>
+<section id="screen" class="screen hidden"><button class="back" onclick="menu()">← Terug naar 100 games</button><h2 id="title"></h2><div id="box" class="box"></div></section>
+<script>
+const games=[
+['🐱','Tik de kat'],['🐭','Tik de muis'],['⭐','Tik de ster'],['🎈','Tik de ballon'],['🍎','Tik de appel'],['⚡','Reactietest'],['🔴','Stop bij rood'],['🟢','Stop bij groen'],['🔵','Stop bij blauw'],['🟡','Stop bij geel'],
+['➕','Plus rekenen'],['➖','Min rekenen'],['✖️','Keer rekenen'],['➗','Deel rekenen'],['🔢','Raad het getal'],['⬆️','Groter of kleiner'],['🎲','Dobbelsteen'],['🪙','Kop of munt'],['🍀','Geluksgetal'],['🏆','Bereik 100 punten'],
+['🧠','Memory 1'],['🧠','Memory 2'],['🧠','Memory 3'],['🧠','Memory 4'],['🧠','Memory 5'],['🧩','Patroon raden'],['🔤','Letter zoeken'],['🔤','Woord raden'],['😀','Emoji raden'],['👀','Zoek de juiste'],
+['🏃','Ren naar rechts'],['🏃','Ren naar links'],['⬆️','Spring omhoog'],['⬇️','Ga omlaag'],['💨','Snel klikken'],['👆','10 keer tikken'],['👆','20 keer tikken'],['👆','30 keer tikken'],['👆','50 keer tikken'],['👆','100 keer tikken'],
+['🐱','Vang 5 katten'],['🐱','Vang 10 katten'],['🐭','Vang 5 muizen'],['⭐','Vang 10 sterren'],['❤️','Vang 5 hartjes'],['💎','Vang 5 diamanten'],['🍕','Vang 5 pizza’s'],['⚽','Vang 5 ballen'],['🎁','Vang 5 cadeaus'],['🔥','Vang 10 vlammen'],
+['🎨','Kies de kleur'],['🔴','Klik rood'],['🟢','Klik groen'],['🔵','Klik blauw'],['🟡','Klik geel'],['🟣','Klik paars'],['🟠','Klik oranje'],['⚫','Klik zwart'],['⚪','Klik wit'],['🌈','Vind de regenboog'],
+['🎯','Doelwit 1'],['🎯','Doelwit 2'],['🎯','Doelwit 3'],['🎯','Doelwit 4'],['🎯','Doelwit 5'],['🎯','Doelwit 6'],['🎯','Doelwit 7'],['🎯','Doelwit 8'],['🎯','Doelwit 9'],['🎯','Doelwit 10'],
+['🚀','Ruimterace'],['🚗','Autorace'],['🚂','Treinrace'],['✈️','Vliegtuigrace'],['🚤','Bootrace'],['🐌','Slakkenrace'],['🐰','Konijnenrace'],['🐢','Schildpaddenrace'],['🦖','Dino race'],['🐲','Draak race'],
+['🔐','Code kraken'],['🔐','Geheime code'],['🔢','Nummer 1'],['🔢','Nummer 2'],['🔢','Nummer 3'],['🔢','Nummer 4'],['🔢','Nummer 5'],['🔢','Nummer 6'],['🔢','Nummer 7'],['🔢','Nummer 8'],
+['👑','Koning van katten'],['🥇','Gouden uitdaging'],['🥈','Zilveren uitdaging'],['🥉','Bronzen uitdaging'],['💥','Mega klik'],['🔥','Super snel'],['💎','Diamantenjacht'],['🌟','Sterrenjacht'],['🐾','Kattenjacht'],['🏁','Finale'],['🏆','Super winnaar']
+];
+const menuEl=document.getElementById('menu'),screen=document.getElementById('screen'),box=document.getElementById('box'),title=document.getElementById('title');
+games.forEach((g,i)=>{let b=document.createElement('button');b.className='game';b.innerHTML='<span>'+g[0]+'</span>'+(i+1)+'. '+g[1];b.onclick=()=>start(i);menuEl.appendChild(b)});
+function menu(){screen.classList.add('hidden');menuEl.classList.remove('hidden')}
+function start(i){menuEl.classList.add('hidden');screen.classList.remove('hidden');title.textContent=(i+1)+'. '+games[i][1];box.innerHTML='';let type=i%10;if(type<5)clicker(games[i][0],5+Math.floor(i/10));else if(type===5)reaction();else if(type===6)colorGame();else if(type===7)mathGame(i);else if(type===8)memory();else race(i)}
+function win(score){box.innerHTML='<div class="big">🏆</div><h2>Gewonnen!</h2><p class="score">Score: '+score+'</p><button class="btn" onclick="start('+current+')">Opnieuw</button>'}
+let current=0;const oldStart=start;start=function(i){current=i;oldStart(i)};
+function clicker(icon,n){let s=0;box.innerHTML='<h2>Tik '+n+' keer op '+icon+'!</h2><div class="arena"><button id="t" class="target">'+icon+'</button></div><p id="sc" class="score">0 / '+n+'</p>';let t=document.getElementById('t'),sc=document.getElementById('sc');function move(){t.style.left=Math.random()*85+'%';t.style.top=Math.random()*75+'%'}t.onclick=()=>{s++;sc.textContent=s+' / '+n;if(s>=n)win(s);else move()};move()}
+function reaction(){box.innerHTML='<div class="big" id="r">🔴</div><h3>Wacht tot het groen wordt...</h3>';let done=false;setTimeout(()=>{done=true;let tm=performance.now();box.innerHTML='<div class="big">🟢</div><button class="btn" id="click">KLIK!</button>';document.getElementById('click').onclick=()=>{let ms=Math.round(performance.now()-tm);box.innerHTML='<div class="big">⚡</div><h2>'+ms+' ms</h2><p>Probeer nog eens!</p><button class="btn" onclick="reaction()">Opnieuw</button>'}},1000+Math.random()*2500)}
+function colorGame(){let cols=['red','green','blue','yellow','purple','orange'];let target=cols[Math.floor(Math.random()*cols.length)];box.innerHTML='<h2>Klik op '+target+'!</h2>';cols.forEach(c=>{let b=document.createElement('button');b.className='color';b.style.background=c;b.onclick=()=>{if(c===target)win(1);else b.style.opacity=.3};box.appendChild(b)})}
+function mathGame(i){let a=Math.floor(Math.random()*20)+1,b=Math.floor(Math.random()*20)+1,op=i%4,ans=op===0?a+b:op===1?a-b:op===2?a*b:Math.floor(a/b),left=op===3?ans*b:a,right=op===3?b:b;let sym=['+','-','×','÷'][op];box.innerHTML='<h2>'+left+' '+sym+' '+right+' = ?</h2><input id="ans" type="number"><br><button class="btn" onclick="checkMath('+ans+')">Controleer</button><p id="result"></p>'}
+function checkMath(ans){let v=Number(document.getElementById('ans').value);document.getElementById('result').textContent=v===ans?'🎉 Goed!':'❌ Niet goed, probeer opnieuw.';if(v===ans)setTimeout(()=>win(1),500)}
+function memory(){let vals=['🐱','🐭','⭐','🍎'];let arr=[...vals,...vals].sort(()=>Math.random()-.5),open=[],found=0;box.innerHTML='<h2>Vind alle paren!</h2><div id="mem"></div>';let m=document.getElementById('mem');arr.forEach((v,i)=>{let b=document.createElement('button');b.className='memory';b.textContent='❓';b.onclick=()=>{if(open.length===2||b.dataset.done)return;b.textContent=v;open.push({b,v});if(open.length===2){if(open[0].v===open[1].v){open.forEach(x=>x.b.dataset.done=1);open=[];found++;if(found===4)win(4)}else setTimeout(()=>{open.forEach(x=>x.b.textContent='❓');open=[]},600)}};m.appendChild(b)})}
+function race(i){let goal=10+(i%5)*5;box.innerHTML='<h2>Klik zo snel mogelijk!</h2><p>Bereik '+goal+' punten.</p><button class="btn" id="race">🏃 KLIK</button><p id="rs" class="score">0</p>';let s=0;document.getElementById('race').onclick=()=>{s++;document.getElementById('rs').textContent=s;if(s>=goal)win(s)}}
+</script>
+</body>
+</html>

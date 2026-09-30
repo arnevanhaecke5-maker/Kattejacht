@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kattejacht - 100 Games</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#101827;color:#fff}header{text-align:center;padding:20px;background:#1f2937;position:sticky;top:0;z-index:2}h1{margin:0 0 8px}.sub{color:#cbd5e1}#games{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:16px;max-width:1000px;margin:auto}button{border:0;border-radius:12px;padding:14px;font-size:16px;font-weight:bold;cursor:pointer;background:#374151;color:white}.card{min-height:70px}.card:hover{background:#4b5563}#screen{display:none;max-width:900px;margin:20px auto;padding:16px;text-align:center}.play{min-height:360px;border-radius:18px;background:#1f2937;padding:20px;position:relative;overflow:hidden}.target{position:absolute;font-size:48px;background:transparent;padding:0}.big{font-size:64px}input{padding:12px;border-radius:10px;border:0;font-size:18px;width:220px}@media(max-width:600px){#games{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header><h1>🐱 Kattejacht: 100 Games</h1><div class="sub">Kies een spel en speel!</div></header>
+<div id="games"></div>
+<div id="screen"><button onclick="back()">← Terug</button><h2 id="title"></h2><div id="play" class="play"></div></div>
+<script>
+const names=["Kat tikken","Muis tikken","Sterrenjacht","Snel klikken","Kleur kiezen","Getal raden","Memory","Reactie test","Tel de katten","Vang de bal","Spring over","Kies rood","Kies blauw","Kies groen","Kies geel","Hoogste getal","Laagste getal","Even of oneven","Rekenrace","Sommetjes","Plus race","Min race","Keer race","Deel race","Woord raden","Letter zoeken","Typ snel","Emoji raden","Kat of hond","Waar is de kat?","Volg de stip","Tik 10 keer","Tik 20 keer","Tik 30 keer","Tik 50 keer","Tik zo snel mogelijk","Stop bij 5","Stop bij 10","Geluksgetal","Dobbelsteen","Muntje","Kop of munt","Kleurgeheugen","Patroon","Volgende getal","Groter of kleiner","Links of rechts","Boven of onder","Raad de kleur","Raad het getal","Katjes tellen","Muizen tellen","Sterren tellen","Hartjes tellen","Snelste vinger","Rustige klik","Mega klik","Mini klik","Gouden kat","Zilveren kat","Bronzen kat","Kat sprint","Muis sprint","Sterren sprint","Tik de ster","Tik de muis","Tik de kat","Tik de ballon","Tik het vierkant","Tik de cirkel","Vang 5","Vang 10","Vang 15","Vang 20","Vang 25","Reactie 1","Reactie 2","Reactie 3","Reactie 4","Reactie 5","Reken 1","Reken 2","Reken 3","Reken 4","Reken 5","Geheugen 1","Geheugen 2","Geheugen 3","Geheugen 4","Geheugen 5","Bonus kat","Super kat","Mega muis","Grote jacht","Kleine jacht","Eindbaas","Kattenkampioen","100e game","Kattejacht finale","🏆 Super winnaar"];
+const games=document.querySelector("#games"),screen=document.querySelector("#screen"),play=document.querySelector("#play"),title=document.querySelector("#title");
+names.forEach((n,i)=>{const b=document.createElement("button");b.className="card";b.textContent=(i+1)+". "+n;b.onclick=()=>start(i);games.appendChild(b)});
+function back(){screen.style.display="none";games.style.display="grid"}
+function start(i){games.style.display="none";screen.style.display="block";title.textContent=(i+1)+". "+names[i];play.innerHTML="";const type=i%5;if(type<3)clickGame(["🐱","🐭","⭐"][type],Math.min(5+Math.floor(i/10),15));else if(type===3)reaction();else quiz(i)}
+function clickGame(icon,n){let s=0;play.innerHTML="<h3>Tik "+n+" keer!</h3><button id='go' class='target'>"+icon+"</button><p id='msg'></p>";const go=document.querySelector("#go"),msg=document.querySelector("#msg");function move(){go.style.left=Math.random()*85+"%";go.style.top=80+Math.random()*220+"px"}go.onclick=()=>{s++;if(s>=n){play.innerHTML="<div class='big'>🏆</div><h2>Gewonnen!</h2><p>Score: "+s+"</p><button onclick='back()'>Terug naar 100 games</button>}else{msg.textContent="Score: "+s;move()}};move()}
+function reaction(){play.innerHTML="<div class='big' id='light'>🔴</div><p>Wacht op groen...</p>";const wait=800+Math.random()*2200;setTimeout(()=>{const t=performance.now();play.innerHTML="<div class='big'>🟢</div><button id='r'>KLIK!</button>";document.querySelector("#r").onclick=()=>{const ms=Math.round(performance.now()-t);play.innerHTML="<div class='big'>⚡</div><h2>"+ms+" ms</h2><button onclick='reaction()'>Opnieuw</button>"}},wait)}
+function quiz(i){const a=Math.floor(Math.random()*20)+1,b=Math.floor(Math.random()*20)+1,sub=i%2,ans=sub?a-b:a+b;play.innerHTML="<h2>"+a+(sub?" − ":" + ")+b+" = ?</h2><input id='q' type='number'><br><br><button onclick='check("+ans+")'>Controleer</button><p id='result'></p>"}
+function check(ans){const v=Number(document.querySelector("#q").value);document.querySelector("#result").textContent=v===ans?"🎉 Goed!":"❌ Probeer opnieuw."}
+</script>
+</body>
+</html>
